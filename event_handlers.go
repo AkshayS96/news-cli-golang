@@ -30,6 +30,12 @@ func handleTabEvent(g *gocui.Gui, v *gocui.View) error {
 	return nil
 }
 
+func loadNews(g *gocui.Gui) error {
+
+	resp, err:=
+	return nil
+}
+
 func menuSelectHandler(g *gocui.Gui, v *gocui.View) error {
 	if _, err := g.SetCurrentView(v.Name()); err != nil {
 		return err
@@ -60,6 +66,7 @@ func menuSelectHandler(g *gocui.Gui, v *gocui.View) error {
 			}
 
 		}
+		loadNews(g)
 		fmt.Fprintln(view, Country, Source, Category)
 	}
 	return nil
