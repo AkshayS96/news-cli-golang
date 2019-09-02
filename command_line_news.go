@@ -14,27 +14,19 @@ import (
 var maxX, maxY int
 
 var (
-	views       = []string{}
-	currentView = -1
-	Sources     = []string{}
-	Categories  = []string{"General", "Technology", "Business", "Entertainment", "Health", "Science", "Sports"}
-	Countries   = []string{"us", "in", "ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co"}
-	Country     = "1: us"
-	Source      = ""
-	Category    = "1: Technology"
-	apikey      = os.Getenv("NEWAPIKEY")
+	views          = []string{}
+	currentView    = -1
+	Sources        = []string{}
+	Categories     = []string{"General", "Technology", "Business", "Entertainment", "Health", "Science", "Sports"}
+	Countries      = []string{"us", "in", "ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co"}
+	Country        = "us"
+	Source         = ""
+	Category       = "technology"
+	Apikey         = os.Getenv("NEWAPIKEY")
+	Articles       []interface{}
+	CurrentArticle int64
 	// "ae", "ar", "at", "au", "be", "bg", "br", "ca", "ch", "cn", "co", "cu", "cz", "de", "eg", "fr", "gb", "gr", "hk", "hu", "id", "ie", "il", "in", "it", "jp", "kr", "lt", "lv", "ma", "mx", "my", "ng", "nl", "no", "nz", "ph", "pl", "pt", "ro", "rs", "ru", "sa", "se", "sg", "si", "sk", "th", "tr", "tw", "ua", "us", "ve", "za"}
 )
-
-type SourceStructure struct {
-	id          string
-	name        string
-	description string
-	url         string
-	category    string
-	language    string
-	country     string
-}
 
 func LoadDataFromAPI() error {
 	//load sources and top headlines with defaul options
@@ -53,7 +45,7 @@ func LoadDataFromAPI() error {
 		source = sourceOption[1]
 	}
 	//first load sources
-	resp, err := http.Get(fmt.Sprintf("https://newsapi.org/v2/sources?apiKey=%v", apikey))
+	resp, err := http.Get(fmt.Sprintf("https://newsapi.org/v2/sources?apiKey=%v", Apikey))
 	if err != nil {
 		return err
 	}
@@ -63,6 +55,7 @@ func LoadDataFromAPI() error {
 	var result map[string]interface{}
 	if err != nil {
 		log.Panicln(err)
+		return err
 	}
 	json.NewDecoder(resp.Body).Decode(&result)
 	sourcesList := result["sources"].([]interface{})

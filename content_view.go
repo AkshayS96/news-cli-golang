@@ -14,11 +14,12 @@ func CreateContentView(g *gocui.Gui) error {
 			return err
 		}
 		content.Title = "Content"
-		content.Autoscroll = true
+		// content.Autoscroll = true
+		content.Highlight = true
 		content.Wrap = true
-		content.SelBgColor = gocui.ColorGreen
+		content.SelBgColor = gocui.ColorDefault
 		content.SelFgColor = gocui.ColorRed
-		fmt.Fprintln(content, "hey this is the content view of my application")
+		fmt.Fprintln(content, "News will be displayed here")
 	}
 	views = append(views, viewName)
 	return nil
